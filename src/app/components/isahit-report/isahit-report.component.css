@@ -1,0 +1,43 @@
+.ellipsis {
+    max-width: 40px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.before-date {
+   font-style: italic;
+   color:grey;
+}
+
+.datepickercustom {
+  text-align: center;
+}
+
+a.disabled {
+  cursor: not-allowed;
+  background-color: #ffe1b6;
+  color: rgb(167, 167, 167);
+}
+
+a.pointer,
+button.pointer {
+  cursor: pointer;
+}
+
+.containter-margin-1 {
+  margin: 1em;
+}
+
+.selectable tr {
+  cursor: pointer;
+}
+
+.selectable tr:hover td {
+  background-color: rgb(207, 204, 204);
+}
+
+div.half-width {
+  width: 50%;
+  margin: 0 auto;
+}

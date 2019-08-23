@@ -1,0 +1,131 @@
+
+<div class="ks-tabs-container ks-tabs-default ks-tabs-no-separator ks-full ks-light">
+  <form [formGroup]='filterReportForm'>
+    <div class="row">
+      <div class="col " id="dateinput">
+        <input
+          class="form-control datepickercustom"
+          type="text"
+          [placeholder]="pickerLabel"
+          daterangepicker
+          [options]="pickerOptions"
+          (selected)="selectedDate($event)"
+          (cancelDaterangepicker)="clearDaterangeValues($event)"
+        />
+      </div>
+      <div class="col-lg-2">
+        <select class="form-control"  formControlName="statusFilter">
+          <option value="">Sélectionner un status...</option>
+          <option value="1">Pending</option>
+          <option value="2">Done</option>
+          <option value="3">Failed</option>
+        </select>
+      </div>
+      <div class="col">
+        <input class="form-control" type="number"  placeholder="ID de l'annonce" formControlName="adsIdFilter">
+      </div>
+      <div class="col">
+        <input class="form-control" type="number" placeholder="ID de la tâche" formControlName="taskIdFilter">
+      </div>
+      <div class="col">
+        <input class="form-control" [value]="this.batch_id == 0 ? null : this.batch_id" type="number" placeholder="ID du batch" formControlName="batchIdFilter">
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary" (click)='submitForm(filterReportForm.value)' type="submit">Filtrer</button>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-danger" (click)='resetFilter()' type="submit">&#10005;</button>
+      </div>
+    </div>
+  </form>
+
+  <div class="row">
+      <table class="table table-hover ks-table-cells-vertical-align-middle" style="width:100%">
+        <thead>
+          <tr>
+            <th>ID de l'annonce</th>
+            <th>ID du batch</th>
+            <th>ID de la tâche</th>
+            <th>Status de création de tâche</th>
+            <th>Date de création de tâche</th>
+            <th>Date màj de la tâche</th>
+            <th>Status de la tâche</th>
+            <th>Type de tâche</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr role="row" *ngFor="let task of reports">
+            <td>
+              {{ task.ad_id }}
+            </td>
+            <td>
+              {{ task.batch_id }}
+            </td>
+            <td>
+              {{ task.isahit_task_id ? task.isahit_task_id  : "Inconnu"  }}
+            </td>
+            <td>
+
+              <div>
+                <span class="badge badge-pill" [ngClass]="getTaskStatusClass(task.task_creation_status)">
+                  {{ task.task_creation_status }}
+                </span>
+              </div>
+
+            </td>
+            <td>
+              {{ task.task_creation | date:"medium" }}
+            </td>
+            <td>
+              {{ task.task_status_update != "Inconnu" ? (task.task_status_update | date:"medium") : ("Aucune mise à jour") }}
+            </td>
+            <td>
+
+              <div>
+                <span class="badge badge-pill" [ngClass]="getTaskStatusClass(task.task_status)">
+                  {{ task.task_status }}
+                </span>
+              </div>
+
+            </td>
+            <td>
+              {{ task.type_task }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+  <div *ngIf="this.reports.length == 0" class="row">
+    <div class="col-md-12">
+        <h2 class="text-center">  {{ reportsDisplay }} </h2>
+      </div>
+  </div>
+  <div class="row has-text-centered pull-right navigation">
+        <label class="control">
+            <input name="pageNbInput" type="number" class="input"  placeholder="Aller à la page" [(ngModel)]="currentGotoPage" />
+            <button type="button" name="pageSubmit" class="btn btn-primary btn-sm" (click)="getSpecificPage(currentGotoPage)">Aller</button>
+          </label>
+        <p  style="display: inline">
+            <a
+              [ngClass]="isPreviousPageAvailable() ? 'pointer' : 'disabled'"
+              (click)="getPreviousPage()"
+              class="btn btn-bo btn-sm click"
+            >
+              Précédent
+            </a>
+            Page {{ currentPage }} sur {{ totalCount }}
+            <a
+              [ngClass]="isNextPageAvailable() ? 'pointer' : 'disabled'"
+              (click)="getNextPage()"
+              class="btn btn-bo btn-sm click"
+            >
+              Suivant
+            </a>
+          </p>
+  </div>
+  <div class="row">
+      <div class="col">
+          <button (click)="this.csvMode = !this.csvMode; this.loadTask();" class="btn btn-warning">Export CSV</button>    
+      </div>
+  </div>
+</div>

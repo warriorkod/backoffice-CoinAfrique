@@ -1,0 +1,228 @@
+<div class="row">
+    <div class="col-md-10 offset-md-1 ks-panels-column-section">
+        <!-- Start card content -->
+        <div class="card">
+            <div class="card-block no-border">
+                <h5 class="card-title">
+                    <b>{{ !!banner ? banner.name : formLabelsFr.newBanner }}</b>
+                </h5>
+
+                <!-- Remote server errors -->
+                <div [hidden]="!remoteError" class="row justify-content-center margin-bottom-1">
+                    <div class="col col-md-6 error-text">
+                        {{ remoteError }}
+                    </div>
+                </div>
+                <!-- End of remote server errors -->
+
+                <form id="bannerForm" [formGroup]="form" role="form" (ngSubmit)="submitForm(form.value)">
+                    <div *ngIf="formErrors.name" class="row justify-content-center">
+                        <div class="col col-md-6 error-text">
+                            {{ formErrors.name }}
+                        </div>
+                    </div>
+                    <!-- Name input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2 form-control-label">
+                            {{ formLabelsFr.name }}
+                        </label>
+
+                        <div class="col-md-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                [class.error-border]="formErrors.name"
+                                formControlName="name"
+                                placeholder="{{ formLabelsFr.name }}">
+                        </div>
+                    </div>
+                    <!-- End of name input -->
+
+                    <div *ngIf="formErrors.smallImage" class="row justify-content-center">
+                        <div class="col col-md-6 error-text">
+                            {{ formErrors.smallImage }}
+                        </div>
+                    </div>
+
+                    <!-- Small image input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2 form-control-label">
+                            {{ formLabelsFr.image }} ({{allowedImgSizes.small[0]}}x{{allowedImgSizes.small[1]}})
+                        </label>
+
+                        <div class="col-md-10">
+                            <input
+                                [class.error-border]="formErrors.smallImage"
+                                formControlName="smallImage"
+                                id="inputImageSmall"
+                                type="file"
+                                accept="image/jpg,image/jpeg"
+                                (change)="onImageChange($event, 'small')" />
+                        </div>
+                    </div>
+                    <!-- End of small image input -->
+
+                    <div *ngIf="formErrors.mediumImage" class="row justify-content-center">
+                        <div class="col col-md-6 error-text">
+                            {{ formErrors.mediumImage }}
+                        </div>
+                    </div>
+
+                    <!-- Start of medium image input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2 form-control-label">
+                            {{ formLabelsFr.image }} ({{allowedImgSizes.medium[0]}}x{{allowedImgSizes.medium[1]}})
+                        </label>
+
+                        <div class="col-md-10">
+                            <input
+                                [class.error-border]="formErrors.mediumImage"
+                                formControlName='mediumImage'
+                                id="inputImageMedium"
+                                type="file"
+                                accept="image/jpg,image/jpeg"
+                                (change)="onImageChange($event, 'medium')" />
+                        </div>
+                    </div>
+                    <!-- End of medium image input -->
+
+                    <div *ngIf="formErrors.fullImage" class="row justify-content-center">
+                        <div class="col col-md-6 error-text">
+                            {{ formErrors.fullImage }}
+                        </div>
+                    </div>
+
+                    <!-- Start of full image input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2 form-control-label">
+                            {{ formLabelsFr.image }} ({{allowedImgSizes.full[0]}}x{{allowedImgSizes.full[1]}})
+                        </label>
+
+                        <div class="col-md-10">
+                            <input
+                                [class.error-border]="formErrors.fullImage"
+                                formControlName='fullImage'
+                                id="inputImageFull"
+                                type="file"
+                                accept="image/jpg,image/jpeg"
+                                (change)="onImageChange($event, 'full')" />
+                        </div>
+                    </div>
+                    <!-- End of full image input -->
+
+                    <!-- Dynamic link input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2 form-control-label">
+                            {{ formLabelsFr.link }}
+                        </label>
+
+                        <div class="col-md-10">
+                            <input
+                                type="text"
+                                class="form-control"
+                                [class.error-border]="formErrors.dynamic_link"
+                                formControlName="dynamic_link"
+                                placeholder="{{ formLabelsFr.link }}">
+                        </div>
+                    </div>
+                    <!-- End of dynamic link input -->
+
+                    <div *ngIf="formErrors.period" class="row justify-content-center">
+                        <div class="col col-md-6 error-text">
+                            {{ formErrors.period }}
+                        </div>
+                    </div>
+
+                    <!-- Daterange input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2">
+                            {{ formLabelsFr.period }}
+                        </label>
+
+                        <div class="col-md-10" id="dateinput-banner">
+                            <input
+                                [class.error-border]="formErrors.period"
+                                class="form-control datepickercustom"
+                                type="text"
+                                daterangepicker
+                                [options]="pickerOptions"
+                                (selected)="selectedDate($event)"
+                                (cancelDaterangepicker)="clearDaterangeValues($event)"/>
+                        </div>
+                    </div>
+                    <!-- End of daterange input -->
+
+                    <!-- Enabled checkbox input -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2">
+                            {{ formLabelsFr.enabled }}
+                        </label>
+
+                        <div class="col-md-10">
+                            <input
+                                [class.error-border]="formErrors.is_enabled"
+                                formControlName="is_enabled"
+                                [checked]="banner?.enabled"
+                                type="checkbox"
+                                class="form-control"/>
+                        </div>
+                    </div>
+                    <!--  End of enabled checkbox input -->
+
+                    <div *ngIf="formErrors.country_code" class="row justify-content-center">
+                        <div class="col col-md-6 error-text">
+                            {{ formErrors.country_code }}
+                        </div>
+                    </div>
+
+                    <!-- Country list select -->
+                    <div class="form-group row">
+                        <label for="default-input" class="col-md-2">
+                            {{ formLabelsFr.country }}
+                        </label>
+
+                        <div class="col-md-10">
+                            <select
+                                class="form-control"
+                                formControlName="country_code"
+                                [class.error-border]="formErrors.country_code">
+
+                                    <option value="">-{{ formLabelsFr.country }}-</option>
+                                    <option *ngFor="let country of countries"
+                                            [ngValue]="country.code">
+                                                {{ country.nom }}
+                                    </option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- End of country list select -->
+                </form>
+                <!-- Finish form content -->
+            </div>
+        </div>
+        <!-- Finish card content -->
+
+        <!-- Submit-cancel buttons -->
+        <div class="row justify-content-around margin-top-1">
+            <div class="col-md-3">
+                <input
+                    class="btn btn-success pointer"
+                    type="submit"
+                    [class.disabled]="isLoading"
+                    form="bannerForm"
+                    [value]="formLabelsFr.submit"/>
+            </div>
+
+            <div class="col-md-3">
+                <button
+                    *ngIf="!!banner"
+                    (click)="emitModeChange()"
+                    class="btn btn-warning">
+                        {{ formLabelsFr.cancel }}
+                </button>
+            </div>
+        </div>
+        <!-- Finish Submit-cancel buttons -->
+
+    </div>
+</div>

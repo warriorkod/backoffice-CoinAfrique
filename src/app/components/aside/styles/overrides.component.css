@@ -1,0 +1,26 @@
+/* 
+    Due to overriding of ks-* assets library
+    !important attribute was the best way in some cases
+*/
+
+a.nav-link > span {
+    color: #d3d3d3 !important;
+}
+
+.ks-sidebar-half-opened {
+    width: 67px !important
+}
+
+.ks-wrapper-no-paddings {
+    position: fixed !important;
+}
+
+.nav-section-header {
+    padding: 1em 1em 1em 1em;;
+    cursor: pointer;
+    color: #f0f1f2 !important;
+}
+
+.margin-center {
+    margin: 0 auto !important;
+}

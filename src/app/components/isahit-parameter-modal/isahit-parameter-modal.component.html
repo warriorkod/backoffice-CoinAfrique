@@ -1,0 +1,73 @@
+<div class="modal fade slide-up add-moderateur-form-modal" id="modal-isahit-param" tabIndex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{formLabelsFr.parameterEdit}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="resetParam()">
+          <span aria-hidden="true" class="la la-close"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="ks-block">
+          <div class="" id="">
+            <form [formGroup]='paramForm' (ngSubmit)="submitForm(paramForm.value)">
+              <div [hidden]="!error" class="row justify-content-center margin-bottom-1">
+                <div class="col col-md-6 error-text">
+                  {{ error }}
+                </div>
+              </div>
+              <div class=" form-group">
+                <div class="fl-flex-label fl-collapsed fl-background">
+                  <label class="fl-label" for="default-input" style="left: 16px; right: 15px;">
+                    {{formLabelsFr.key}}
+                  </label>
+                </div>
+                <input type="text" class="form-control" id="default-input" formControlName="key" [readonly]="true">
+                <div *ngIf="paramForm.controls['key'].errors  && paramForm.get('key').touched" class="error-msg">
+                  <div [hidden]="!paramForm.controls['key'].errors.required">{{formLabelsFr.key}} obligatoire.</div>
+                </div>
+              </div>
+              <div class=" form-group">
+                <div class="fl-flex-label fl-collapsed fl-background">
+                  <label class="fl-label" for="default-input2" style="left: 16px; right: 15px;">
+                    {{formLabelsFr.value}}
+                    <span class="fl-required">*</span>
+                  </label>
+                </div>
+                <input type="text" class="form-control" id="default-input2" formControlName="value">
+                <div *ngIf="paramForm.controls['value'].errors && paramForm.get('value').touched" class="error-msg">
+                  <div [hidden]="!paramForm.controls['value'].errors.required">{{formLabelsFr.value}} obligatoire.</div>
+                </div>
+              </div>
+              <div class=" form-group">
+                <div class="fl-flex-label fl-collapsed fl-background">
+                  <label class="fl-label" for="default-input3" style="left: 16px; right: 15px;">
+                    {{formLabelsFr.description}}
+                  </label>
+                </div>
+                <textarea class="form-control" id="default-input3" formControlName="description" [readonly]="true">
+                  {{param?.description}}
+                  </textarea>
+                <div *ngIf="paramForm.controls['description'].errors && paramForm.get('description').touched" class="error-msg">
+                  <div [hidden]="!paramForm.controls['description'].errors.required">{{formLabelsFr.description}} obligatoire.</div>
+                </div>
+              </div>
+              <div class="row justify-content-around margin-top-1">
+                <div class="col-md-3">
+                  <button type="button" class="btn btn-warning" (click)="resetParam()" data-dismiss="modal">
+                    {{ formLabelsFr.cancel }}
+                  </button>
+                </div>
+                <div class="col-md-3">
+                  <button type="submit" class="btn btn-primary" [disabled]="!paramForm.valid">
+                    {{ formLabelsFr.submit }}
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

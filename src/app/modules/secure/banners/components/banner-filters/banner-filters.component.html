@@ -1,0 +1,51 @@
+<div class="column is-one-third">
+    <form [formGroup]='filterBannerForm' (ngSubmit)="performBannerFiltration(filterBannerForm.value)" class="center">
+        <div class="row">
+            <div class="col">
+                <select class="form-control" formControlName="country_code">
+                    <option value="">-{{ labelsFr.countries }}-</option>
+                    <option *ngFor="let country of countries "
+                            [ngValue]="country.code">
+                                {{ country.nom }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col">
+                <select class="form-control" formControlName="is_enabled">
+                    <option value="">-{{ labelsFr.visibilities }}-</option>
+                    <option *ngFor="let visibility of visibilities"
+                            [ngValue]="visibility.code">
+                                {{ visibility.name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col">
+                <input
+                    type="text"
+                    class="form-control"
+                    formControlName="name"
+                    [maxLength]="validationRules.name.maxLength"
+                    [placeholder]="labelsFr.name" />
+            </div>
+
+            <div class="col">
+                <button type="submit" name="button" class="btn btn-primary">
+                    {{ labelsFr.filter }}
+                </button>
+            </div>
+
+            <!-- Separate button to open new banner form in the modal-->
+            <div class="col">
+                <button
+                    type="button"
+                    (click)="emitShowNewBannerForm()"
+                    class="btn btn-warning pull-right ">
+                        {{ labelsFr.newBanner }}
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>

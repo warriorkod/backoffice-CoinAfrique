@@ -1,0 +1,348 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '14px', fullScreenBackdrop: true }"></ngx-loading>
+<bo-header [title]="titre$"></bo-header>
+
+<!-- Main content -->
+<div class="ks-crm-contacts-container">
+    <div class="ks-crm-contacts-users-list-column ks-padding-1">
+        <div class="card-block" style="padding: 10px;">
+            <button (click)="switchSectionState(0)" id="section-0" class=" btn btn-bo">les filtres</button>
+            <button class="btn btn-bo pull-right" style="margin-left: 5px" data-toggle="modal" data-target="#CreateVendorModal">Créer un compte</button>  
+            <button class="btn btn-bo pull-right" (click)='exportCSV()'>Exporter en CSV</button>  
+        </div>
+        <div class="panel" [hidden]="sectionCollapseStates[0]">
+          <div class="column is-one-third">
+           <form [formGroup]='searchForm' (ngSubmit)="search(searchForm.value)">
+             <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label for="search">Nom complet</label>
+                    <input type="text" class="form-control" id="search" placeholder="Nom complet" formControlName="keyword">
+                  </div>
+                  <div class="col-sm-3 form-group">
+                    <label for="contact-email">Pays</label>
+                    <select formControlName="pays" class="selectpicker form-control images select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                      <option value=""></option>
+                      <option *ngFor="let p of pays$ | async" [value]="p.code">
+                        {{p.nom}}
+                      </option>
+                    </select>
+      
+                  </div>
+                  <div class="col-sm-3 form-group">
+                    <label for="subject">Dernière Connexion Moins de X Jours</label>
+                    <input type="number" formControlName="last_signin" class="form-control" placeholder="-1">
+                  </div>
+                  <div class="col-sm-3 form-group">
+                      <label for="subject">Inscrits Moins de X Jours</label>
+                      <input type="number" formControlName="inscrit_moins_de" class="form-control" placeholder="-1">
+                  </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <label for="subject">Dernier Posting Moins de X Jours</label>
+                    <input type="number" formControlName="last_posting" class="form-control" placeholder="-1">
+                  </div>
+                  <div class="col-sm-3 form-group">
+                      <label for="subject">Nombre d'annonces >=</label>
+                      <input type="number" formControlName="nbre_annonces" class="form-control" placeholder="-1">
+                    </div>
+                    <div class="col-sm-3 form-group">
+                      <label for="subject">Nombre de produits vendus >=</label>
+                      <input type="number" formControlName="nbre_produits_vendus" class="form-control" placeholder="-1">
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sn-3 form-group">
+                    <div class="ks-actions">
+                      <button class="btn btn-bo btn-sm" type="submit">Rechercher</button>
+                      <button class="btn btn-default btn-sm" type="reset" (click)="reset()">Reset</button>
+                    </div>
+                </div>
+            </div>
+          </form>
+      </div> 
+    </div>
+
+<div class="ks-crm-contacts-users-list-column-table-container">
+  <table  
+  datatable
+  [dtOptions]="dtOptions"
+  [dtTrigger]="dtTrigger"
+  class="table table-hover ks-table-cells-vertical-align-middle row-border hover  " >
+        <thead>
+          <tr>
+            <th>Nom complet</th>
+            <th>Numéro de téléphone</th>
+            <th>Pays</th>
+            <th>Nombre d'annonces</th>
+            <th>Informations</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+      <tbody>
+        <tr *ngFor="let vendeur of vendeurs ">
+          <td scope="row">
+            <a [routerLink]="['/vendeursrfu', vendeur.uuid] ">{{ vendeur?.name }} </a>
+            <br>
+            <small>
+              {{ vendeur?.address }}
+            </small>
+          </td>
+          <td>{{ vendeur?.phone }}</td>
+          <td>{{ vendeur?.country_code }}</td>
+          <td>{{ vendeur?.ads_count }}
+            <small>annonces postées</small>
+          </td>
+          <td>
+            <small>
+              <span class="ks-time ">Username: {{ vendeur?.username }}</span>
+            </small>
+            <br/>
+            <small>
+              <span class="ks-time ">Derniére connexion {{ vendeur?.last_login | amDateFormat: 'DD/MM/YYYY HH:mm' }}</span>
+            </small>
+            <br/>
+             <small>
+              <span class="ks-time ">Inscrit depuis {{ vendeur?.date_joined | amDateFormat: 'DD/MM/YYYY HH:mm' }}</span>
+            </small>
+          </td>
+          <td>
+            <small [routerLink]="['/vendeursrfu', vendeur.uuid]"
+              class="btn btn-info">
+              <i class="la la-eye"></i>
+            </small>
+            <small (click)="edit(vendeur)"  class="btn btn-warning">
+              <i class="la la-pencil"></i>
+            </small>
+          </td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+
+<div class="col ks-crm-contacts-users-list-column-table-container">
+  <div class="has-text-centered pull-right navigation">
+    <label class="control">
+      <input type="text" class="input" placeholder="Aller à la page" [(ngModel)]="page" />
+      <button type="button" name="button" class="btn btn-primary btn-sm" (click)="goToPage()">Aller</button>
+    </label>
+    <p style="display: inline">
+      <a *ngIf="prev" (click)="getPreviousPage()" class="btn btn-bo btn-sm click">Précédent</a>
+      Page {{ current_page }} sur {{ total }}
+      <a *ngIf="next" (click)="getNextPage()" class="btn btn-bo btn-sm click">Suivant</a>
+    </p>
+  </div>
+</div> 
+</div>
+</div>
+
+
+
+<div class="modal fade slide-up edit-vendeur-form-modal" id="edit-vendeur-form-modal" tabIndex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Editer vendeur</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true" class="la la-close"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="ks-block">
+              <form [formGroup]='editForm' (ngSubmit)="onEditFormSubmit(editForm.value)">
+                <div class="form-group">
+                  <div class="fl-flex-label fl-collapsed fl-background">
+                    <label class="fl-label" for="name" style="left: 16px; right: 15px;">Nom complet
+                      <span class="fl-required">*</span>
+                    </label>  
+                  </div>
+                  <input type="text" class="form-control"  formControlName="name">
+                </div>
+                <div class="form-group">
+                  <div class="fl-flex-label fl-collapsed fl-background">
+                    <label class="fl-label" for="email" style="left: 16px; right: 15px;">Email
+                      <span class="fl-required">*</span>
+                    </label>
+                  </div>
+                  <input type="email" class="form-control"  formControlName="email">
+                </div>
+                <div class="form-group">
+                  <div class="fl-flex-label fl-collapsed fl-background">
+                    <label class="fl-label" for="phone" style="left: 16px; right: 15px;">Numéro Téléphone
+                      <span class="fl-required">*</span>
+                    </label>
+                  </div>
+                  <input type="text" class="form-control"  formControlName="phone">
+                </div>
+                <div class="form-group">
+                  <div class="fl-flex-label fl-collapsed fl-background">
+                    <label class="fl-label" for="whatsapp_phone" style="left: 16px; right: 15px;">Numéro whatsApp
+                      <span class="fl-required">*</span>
+                    </label>
+                  </div>
+                  <input type="text" class="form-control"  formControlName="whatsapp_phone">
+                </div>
+                <input type="hidden" class="form-control"  formControlName="uuid">
+  
+               <div class="form-group">
+                  <div class="fl-flex-label fl-collapsed fl-background">
+                    <label class="fl-label" for="default-input" style="left: 16px; right: 15px;">Pays
+                      <span class="fl-required">*</span>
+                    </label>
+                  </div>
+                  <select (change)="onChangePays(this.editForm.value)"  class="form-control" formControlName="country">
+                    <option *ngFor="let p of pays$ | async" [value]="p.code">
+                      {{p.nom}}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                    <div class="fl-flex-label fl-collapsed fl-background">
+                        <label class="fl-label" for="address" style="left: 16px; right: 15px;">address
+                            <span class="fl-required">*</span>
+                          </label>
+                    </div>
+                    <input type="text" class="form-control"  formControlName="address_show">
+                  <select 
+                          (change)="onSelectLocality(this.editForm.value)"
+                          class="form-control" tabindex="-1" aria-hidden="true"  
+                          required
+                          formControlName="address" >
+                     <option disabled value="">Choisir la localité</option>
+                     <option *ngFor="let item of localityByCountry$ " [ngValue]="item.nom">{{item.nom}}</option>
+                      <ng-template ngFor let-item [ngForOf]="localityByCountry$">
+                                    <optgroup *ngIf="item.childs.length !== 0" label="{{item.nom}}">
+                                      <option *ngFor="let child of item.childs" [ngValue]="child.nom">{{child.nom}}</option>
+                                    </optgroup>
+                    </ng-template>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <select class="form-control" tabindex="-1" aria-hidden="true" 
+                          required
+                          formControlName="acquisition_channel">
+                          <option *ngFor="let item of acquisition" [value]="item.id">{{item.nom}}</option>
+                  </select>
+                  </div>
+                <div class="form-group">
+                  <div class="fl-flex-label fl-collapsed fl-background">
+                    <label class="fl-label" for="whatsapp_phone" style="left: 16px; right: 15px;">Vendeur actif
+                      <span class="fl-required">*</span>
+                    </label>
+                  </div>
+                  <input type="checkbox" class="form-control"  formControlName="is_active">
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block">Enregistrer</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+
+<div class="modal fade" id="CreateVendorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau compte</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form  [formGroup]='vendorForm' (ngSubmit)="onCreateNewVendor(vendorForm.value)">
+        <div class="modal-body">
+  
+  <div *ngIf="diagnostic"  class="alert alert-danger">
+            <p> {{diagnostic}} </p>
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control" 
+           required placeholder="Nom complet*"
+           formControlName="name">
+    <label *ngIf="formErrors['name'] != ''" class="valid-error"> {{ formErrors['name'] }}</label>
+  
+  </div>
+  
+  <div class="form-group">
+    <input type="email"  class="form-control" 
+    formControlName="email" placeholder="Email*" required>
+    <label *ngIf="formErrors['email'] != ''" class="valid-error"> {{ formErrors['email'] }}</label>
+  </div>
+  <div class="form-group">
+    <input type="password"  class="form-control" 
+    formControlName="password1" placeholder="Mot de passe*" required>
+    <p class="label label-danger" *ngIf="vendorForm.get('password1').hasError('minlength')">Le mot de passe doit faire minimum 6 caractéres...</p>
+    <label *ngIf="formErrors['password1'] != ''" class="valid-error"> {{ formErrors['password1'] }}</label>
+  </div>
+  <div class="form-group">
+    <input type="password"  class="form-control" 
+    formControlName="password2" placeholder="Confirmer mot de passe*" required>
+    <p class="label label-danger" *ngIf="vendorForm.hasError('mismatch')  && vendorForm.get('password2').touched">Les mots de passes ne correspondent pas</p>
+    <p class="label label-danger" *ngIf="vendorForm.get('password2').hasError('minlength')">Le mot de passe doit faire minimum 6 caractéres...</p>
+    <label *ngIf="formErrors['password2'] != ''" class="valid-error"> {{ formErrors['password2'] }}</label>
+
+  </div>
+  
+  <div class="form-group">
+    <select
+            (change)="onChangePays(this.vendorForm.value)" 
+            class="form-control" tabindex="-1" aria-hidden="true" 
+            required
+            formControlName="country">
+      <option disabled value="">Choisir le pays*</option>
+      <option *ngFor="let p of pays$ | async" [value]="p.id">  {{p.nom}}</option>
+    </select>
+    <label *ngIf="formErrors['country'] != ''" class="valid-error"> {{ formErrors['country'] }}</label>
+  </div>
+  
+  <div class="form-group">
+    <select 
+            (change)="onSelectLocality(this.vendorForm.value)"
+            class="form-control" tabindex="-1" aria-hidden="true"  
+            required
+            formControlName="address" >
+       <option disabled value="">Choisir la localité</option>
+       <option *ngFor="let item of localityByCountry$ " [ngValue]="item.nom">{{item.nom}}</option>
+        <ng-template ngFor let-item [ngForOf]="localityByCountry$">
+                      <optgroup *ngIf="item.childs.length !== 0" label="{{item.nom}}">
+                        <option *ngFor="let child of item.childs" [ngValue]="child.nom">{{child.nom}}</option>
+                      </optgroup>
+      </ng-template>
+    </select>
+  </div>
+  <div class="form-group">
+    <input type="text"  class="form-control"  [value]="phone_code"
+    formControlName="phone" placeholder="Numéro téléphone " >
+  </div>
+  <div class="form-group">
+    <input type="text"  class="form-control"  [value]="phone_code"
+    formControlName="whatsapp_phone" placeholder="Numéro whatsApp" >
+  </div>
+  <div class="form-group">
+    <select class="form-control" tabindex="-1" aria-hidden="true" 
+            required
+            formControlName="acquisition_channel">
+      <option disabled value="">Choisir l'acquisition</option>
+      <option *ngFor="let item of acquisition" [value]="item.id">{{item.nom}}</option>
+    </select>
+    </div>
+    <div class="form-group">
+      <select class="form-control" tabindex="-1" aria-hidden="true" 
+              required
+              formControlName="account_type">
+        <option disabled value="">Coisir le type de compte*</option>
+        <option  [value]="pro">Professional</option>
+        <option  [value]="standard">Standard</option>
+
+      </select>
+      </div>
+        </div>
+        <div class="modal-footer">
+          <button type="reset" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          <button type="submit"  class="btn btn-primary">Créer le compte</button>
+        </div>
+           </form>
+      </div>
+    </div>
+</div>

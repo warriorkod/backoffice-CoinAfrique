@@ -1,0 +1,194 @@
+<ngx-loading
+  [hidden]="isLoaded"
+  [show]="status$ | async"
+  [config]="{ backdropBorderRadius: '14px', fullScreenBackdrop: true }"
+></ngx-loading>
+<bo-header [title]="titre"></bo-header>
+
+<div class="ks-crm-contacts-container">
+  <div class="ks-crm-contacts-users-list-column">
+    <div class="column is-one-third">
+      <form class="center">
+        <div class="row">
+          <div class="col custom-checkbox">
+            <input
+              type="checkbox"
+              id="show_desactivate"
+              name="show_desactivate"
+              (change)="showAll()"
+            />
+            <label for="show_desactivate"
+              >Afficher les utilisateurs désactivés</label
+            >
+          </div>
+          <div class="col">
+            <!-- <button type="submit" name="button" class="btn btn-primary" (click)="search()">Rechercher</button> -->
+            <button
+              name="button"
+              class="btn btn-bo pull-right custom-btn"
+              (click)="addNewUser()"
+            >
+              Ajouter
+            </button>
+            <button
+              name="button"
+              class="btn btn-bo pull-right custom-btn"
+              data-toggle="modal"
+              data-target="#modal-import-users"
+            >
+              Importer un ficher CSV
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="ks-crm-contacts-users-list-column-table-container">
+      <table
+        datatable
+        [dtOptions]="dtOptions"
+        [dtTrigger]="dtTrigger"
+        class="table table-hover ks-table-cells-vertical-align-middle row-border hover">
+        <thead>
+          <tr>
+            <th>Nom complet</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of moderateurs">
+            <ng-container *ngIf="showDesactivated || user.is_active">
+              <td>{{ user.firstname }} {{ user.lastname }}</td>
+              <td>{{ user.username }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <small *ngIf="isAdmin$" class="btn btn-success">
+                  <a
+                    [routerLink]="['/audits/user/', user.user_id]"
+                    class="view-moderator-profile"
+                  >
+                    <i class="la la-eye"></i>
+                  </a>
+                </small>
+                <small class="btn btn-warning" (click)="editer(user)">
+                  <i class="la la-pencil"></i>
+                </small>
+                <small
+                  class="btn btn-danger"
+                  (click)="delete(user)"
+                  *ngIf="user.user_id !== currentUserId"
+                >
+                  <i class="la la-close"></i>
+                </small>
+              </td>
+              <td>
+                <small
+                  class="btn btn-danger"
+                  (click)="desactivate(user)"
+                  *ngIf="user.is_active && user.user_id !== currentUserId"
+                >
+                  Désactiver
+                </small>
+                <small
+                  *ngIf="!user.is_active"
+                  class="badge badge-danger badge-sm"
+                  >Désactivé</small
+                >
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col ks-crm-contacts-users-list-column-table-container">
+      <div class="has-text-centered pull-right navigation">
+        <label class="control">
+          <input type="text" class="input" placeholder="Aller à la page" [(ngModel)]="page" />
+          <button type="button" name="button" class="btn btn-primary btn-sm" (click)="goToPage()">Aller</button>
+        </label>
+        <p style="display: inline">
+          <a *ngIf="prev" (click)="getPrevPage()" class="btn btn-bo btn-sm">Précédent</a>
+          Page {{ current_page }} sur {{ total_page }}
+          <a *ngIf="next" (click)="getNextPage()" class="btn btn-bo btn-sm click">Suivant</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<bo-moderateur-modal
+  [user]="moderateur$ | async"
+  (onFormSubmit)="onFormSubmit($event)"
+  [erreur]="erreur"
+>
+</bo-moderateur-modal>
+
+<div
+  class="modal fade modal-import-users"
+  id="modal-import-users"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="mySmallModalLabel2"
+  style="display: none;"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-sm" style="min-width:600px; max-width: 800px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Importer un fichier CSV</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true" class="la la-close"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="form-group row">
+            <label for="example-search-input" class="col-form-label"
+              >Ficher:
+            </label>
+            <input
+              type="file"
+              (change)="changeListener($event.target.files)"
+              class="form-control"
+            />
+          </div>
+          <div *ngIf="errModal !== ''" class="row" role="alert">
+            <label style="color: red;"> {{ errModal }} </label>
+          </div>
+          <div *ngIf="stats.total !== 0">
+            <span class="label label-success">Total: {{ stats.total }}</span> |
+            <span class="label label-success"
+              >Ajoutés: {{ stats.successCount }}</span
+            >
+            |
+            <span class="label label-success"
+              >Ignorés: {{ stats.errorCount }}</span
+            >
+          </div>
+          <hr />
+          <div class="" *ngIf="listErreurs.length !== 0">
+            <label style="text-align: center; color: red;"
+              >Erreurs ({{ listErreurs.length }}):</label
+            >
+            <ul class="list-group list-sm">
+              <li class="list-group-item" *ngFor="let erreur of listErreurs">
+                Ignorés: {{ erreur }}
+              </li>
+            </ul>
+          </div>
+          <!-- <div *ngIf="listSuccess">
+                <h5 class="label label-success" style="text-align: center;">L'ensemble des élements de la liste a été ajouté avec succes</h5>
+            </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

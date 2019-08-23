@@ -1,0 +1,234 @@
+.ks-time {
+  float: right;
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 400;
+  color: #858585;
+  position: relative;
+  top: 3px;
+}
+
+.ks-color-danger,
+.ks-color-2 {
+  color: #ef5350 !important;
+}
+
+.ks-color-1,
+.ks-color-success {
+  color: #4caf50 !important;
+}
+
+.ks-color-0,
+.ks-color-warning {
+  color: #f7ca18 !important;
+}
+
+.ks-color-id {
+  color:#333;
+  font-size:11px;
+}
+
+.ks-color-titre {
+  color:#333;
+  font-size:17px;
+  font-weight: bold;
+}
+.is-one-third {
+  margin: 10px auto;
+}
+
+.table tr.active td {
+  background-color: #ff9e15 !important;
+  color: white;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click],
+.click,
+.nav-item {
+  cursor: pointer;
+}
+
+.add-contact-form-modal .modal-content {
+  width: 600px;
+}
+
+.fermer {
+  height: 12px;
+  margin-left: 11px;
+  margin-bottom: 11px;
+  padding: 0;
+  margin-right: 0;
+  top: 1px;
+  float: right;
+}
+
+.bloc_photo_ad {
+  display: flex;
+  flex-direction: row;
+  width: 550px;
+}
+
+.bloc_photo_ad .item {
+  margin: auto;
+  width: 33%;
+}
+
+.bloc_photo_ad .item img {
+  width: 100%;
+  height: auto;
+}
+
+.bloc_photo_ad .item .action {
+  margin: 5px auto;
+  text-align: center;
+}
+
+.click{
+  color: white;
+}
+.center{
+  text-align: center;
+}
+
+.backdrop{
+  z-index: 9999;
+}
+
+.text-concat {
+  position: relative;
+  display: inline-block;
+  word-wrap: break-word;
+  overflow: hidden;
+  max-height: 6.9em; /* (Number of lines you want visible) * (line-height) */
+  line-height: 1.5em;
+  text-align:justify;
+  font-size: 14px;
+}
+
+.is-one-third{
+  margin: 10px 50px;
+}
+
+.navigation{
+  margin: auto 50px;
+}
+
+.alreadyInModeration{
+  font-weight: 600;
+  color: red;
+}
+
+
+/* for modal */
+.locked-ad-modal,
+.locked-ad-modal-modal-box {
+  z-index: 900;
+}
+
+.locked-ad-modal-modal-sandbox {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #000000;
+  opacity: 0.1;
+}
+
+.locked-ad-modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: rgb(0,0,0);
+  background: rgba(0,0,0,.8);
+  overflow: auto;
+}
+
+.locked-ad-modal-modal-box {
+  position: relative;
+  width: 50%;
+  max-width: 920px;
+  margin: 100px auto;
+  animation-name: modalbox;
+  animation-duration: .4s;
+  animation-timing-function: cubic-bezier(0,0,.3,1.6);
+}
+
+.locked-ad-modal-modal-header {
+  border-bottom: 1px solid #dee0e1;
+  background: #f5f6f7;
+  padding: 8px 16px;
+}
+
+.locked-ad-modal-modal-header h6 {
+  margin: 0;
+  margin-bottom: 0;
+  line-height: 1.5;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.locked-ad-modal-modal-body {
+  background: #FFFFFF;
+  padding: 16px 20px 14px 20px;
+}
+
+.locked-ad-modal-modal-body p {
+  line-height: 0.5;
+  font-weight: bold;
+}
+
+
+
+/* Animation */
+@-webkit-keyframes modalbox {
+  0% {
+    top: -250px;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes modalbox {
+  0% {
+    top: -250px;
+    opacity: 0;
+  }
+  100% {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+/* Aditional Styles */
+* {
+  font-family: "Roboto", sans-serif;
+  font-weight: normal;
+}
+
+
+.locked-ad-modal button {
+  padding: 5px 15px;
+  border-radius: 5px;
+  background: #ff9e15;
+  color: #ffffff;
+  border: 1px solid #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+.cursor_pointer{
+  cursor: pointer;
+}

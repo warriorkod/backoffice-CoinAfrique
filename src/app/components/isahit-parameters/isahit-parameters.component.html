@@ -1,0 +1,30 @@
+<table class="table table-hover ks-table-cells-vertical-align-middle" style="width=100%">
+  <tbody>
+    <tr role="row">
+      <th>Id</th>
+      <th>{{formLabelsFr.key}}</th>
+      <th>{{formLabelsFr.value}}</th>
+      <th>{{formLabelsFr.description}}</th>
+    </tr>
+    <tr *ngFor="let item of this.parameters; let i = index">
+      <td>{{ item.id }}</td>
+      <td>{{ item.key }}</td>
+      <td>{{ item.value }}</td>
+      <td class="ellipsis">{{ item.description }}</td>
+      <td>
+        <button (click)="showEditModal(item, i)" class="btn btn-primary pointer" data-toggle="modal" data-target="#modal-isahit-param">
+          {{formLabelsFr.edit}}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<isahit-parameter-modal
+  [param]='selectedParam'
+  [error]='error'
+  [formLabelsFr]='formLabelsFr'
+  (resetSelectedParam)="resetSelectedParam($event)"
+  (onFormSubmit)="updateParam($event)"
+  *ngIf='selectedParam'
+></isahit-parameter-modal>

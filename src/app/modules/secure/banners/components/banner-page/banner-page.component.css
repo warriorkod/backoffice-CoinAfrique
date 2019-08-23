@@ -1,0 +1,24 @@
+div.text-bold {
+    font-weight: 900;
+}
+
+.margin-top-1 {
+    margin-top: 1em;
+}
+
+.margin-left-1 {
+    margin-left: 1em;
+}
+
+.margin-bottom-1 {
+    margin-bottom: 1em;
+}
+
+.img-row {
+    width: 10em;
+    height: 10em;
+}
+
+.no-border {
+    border: none;
+}

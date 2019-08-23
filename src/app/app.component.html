@@ -1,0 +1,17 @@
+<!-- BEGIN HEADER -->
+<bo-navbar *ngIf="_apisService.isLogged()" (onNavbarStateChange)="handleNavbarStateChange($event)"></bo-navbar>
+<!-- END HEADER -->
+<div class="ks-page-container ks-dashboard-tabbed-sidebar-fixed-tabs">
+
+  <!-- BEGIN DEFAULT SIDEBAR -->
+  <bo-aside *ngIf="_apisService.isLogged()" [sidebarState]="navbarState"></bo-aside>
+  <!-- END DEFAULT SIDEBAR -->
+
+  <div class="ks-column ks-page">
+    <div class="ks-page-content">
+      <div class="ks-page-content-body">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<ngx-loading [config]="{ backdropBorderRadius: '14px', fullScreenBackdrop: true }"></ngx-loading>
+<bo-header [title]="titre$"></bo-header>
+<div class="ks-tabs-container ks-tabs-default ks-tabs-no-separator ks-full ks-light">
+  <div class="ks-tabs-container ks-tabs-default ks-tabs-no-separator ks-full ks-light">
+    <ul class="nav ks-nav-tabs">
+      <li class="nav-item" (click)="switchToTab(4)">
+        <a class="nav-link" [ngClass]="currentTab === 4 ? 'active' : '' ">Attente modération</a>
+      </li>
+      <li class="nav-item" (click)="switchToTab(0)">
+        <a class="nav-link" [ngClass]="currentTab === 0 ? 'active' : '' ">Token</a>
+      </li>
+      <li class="nav-item" (click)="switchToTab(1)">
+        <a class="nav-link" [ngClass]="currentTab === 1 ? 'active' : '' ">Créer batch</a>
+      </li>
+      <li class="nav-item" (click)="switchToTab(2)">
+        <a class="nav-link" [ngClass]="currentTab === 2 ? 'active' : '' ">État batch</a>
+      </li>
+      <li class="nav-item" (click)="switchToTab(3)">
+        <a class="nav-link" [ngClass]="currentTab === 3 ? 'active' : '' ">Rapports</a>
+      </li>
+      <li class="nav-item" (click)="switchToTab(5)">
+        <a class="nav-link" [ngClass]="currentTab === 5 ? 'active' : '' ">Parameters</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="currentTab == 4">
+ <isahit-moderation></isahit-moderation>
+</div>
+
+<div *ngIf="currentTab == 0">
+  <isahit-token></isahit-token>
+</div>
+
+<div *ngIf="currentTab == 1" class="row">
+  <isahit-addbatch></isahit-addbatch>
+</div>
+
+<div *ngIf="currentTab == 2" class="container containter-margin-1">
+  <isahit-batch></isahit-batch>
+</div>
+
+<div *ngIf="currentTab == 3">
+  <!---- <div class="ks-crm-contacts-container"> -->
+  <isahit-report [batch_id]="batch_id"></isahit-report>
+</div>
+
+<div *ngIf="currentTab == 5">
+  <isahit-parameters></isahit-parameters>
+</div>

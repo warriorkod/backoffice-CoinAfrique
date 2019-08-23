@@ -1,0 +1,57 @@
+<div class="ks-crm-contacts-users-list-column-table-container">
+    <table class="table table-hover ks-table-cells-vertical-align-middle" name="bannersTable">
+        <thead>
+            <tr>
+                <th>
+                    <!-- Image here, so no description -->
+                </th>
+
+                <!-- Number -->
+                <th>Nom</th>
+
+                <!-- Country -->
+                <th>Pays</th>
+
+                <!-- Start -->
+                <th>Début</th>
+
+                <!-- End -->
+                <th>Fin</th>
+
+                <!-- Active -->
+                <th>Activé</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr (click)="emitBannerInfo(banner)" role="row" *ngFor="let banner of banners" class="pointable">
+
+                <td>
+                    <img src="{{ banner.image_url_500 }}" width="100" height="100">
+                </td>
+
+                <td>
+                    {{ banner.name }}
+                </td>
+
+                <td>
+                    {{ banner.country_code | redableCountryName: countries }}
+                </td>
+
+                <td>
+                    {{banner.start | amUtc | amDateFormat: bannerDateFormat }}
+                </td>
+
+                <td>
+                    {{banner.end | amUtc | amDateFormat: bannerDateFormat }}
+                </td>
+
+                <td>
+                    <span class="badge badge-pill" [ngClass]="banner.enabled ? 'badge-info' : 'badge-warning'">
+                        {{ banner.enabled | readableBooleanFr | uppercase }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

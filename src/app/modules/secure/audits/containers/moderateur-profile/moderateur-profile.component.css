@@ -1,0 +1,46 @@
+.rejected-ad, .validated-ad {
+  font-weight: bold;
+}
+
+.rejected-ad {
+  color: red;
+}
+
+.validated-ad {
+  color: green;
+}
+
+.titre{
+	font-weight: bold;
+	color:gray;
+}
+
+.ks-color-danger,
+.ks-color-2 {
+	color: #ef5350 !important;
+}
+
+.ks-color-1,
+.ks-color-success {
+	color: #4caf50 !important;
+}
+
+.ks-color-0,
+.ks-color-warning {
+	color: #f7ca18 !important;
+}
+
+[ng-click],
+[data-ng-click],
+[x-ng-click],
+.click,
+.nav-item {
+	cursor: pointer;
+}
+.is-one-third {
+	margin: 10px auto;
+}
+
+.cursor_pointer{
+  cursor: pointer;
+}

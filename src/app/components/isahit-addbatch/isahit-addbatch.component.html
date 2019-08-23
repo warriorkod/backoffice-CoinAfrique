@@ -1,0 +1,13 @@
+<div id="" class="col card text-center" style="width:100%">
+    <form [formGroup]='selectBatchForm' (ngSubmit)="submitForm(selectBatchForm.value)">
+      <h3>Selectionner de l'id</h3>
+      <input type="number" min="0" formControlName="ad_id_lower_range">
+      <p class="text-centered"><h4>à l'id</h4><p>
+      <div class="col">
+        <input type="number" min="0" formControlName="ad_id_upper_range">
+      </div>
+      <div class="col">
+        <button type="submit" class="btn btn-primary">Sélectionner</button>
+      </div>
+    </form>
+</div>

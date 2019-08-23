@@ -1,0 +1,87 @@
+<form action="" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col-md-2">
+      <input
+        class="form-control"
+        type="text"
+        formControlName="keyword"
+        placeholder="keyword"
+      />
+    </div>
+    <div class="col-md-2">
+      <select
+        class="form-control"
+        [(ngModel)]="countrySelected"
+        formControlName="country"
+      >
+        <option *ngFor="let country of countries" [value]="country.id"
+          >{{ country.nom }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <select class="form-control" formControlName="category">
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.nom }}
+        </option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <input
+        class="form-control"
+        type="number"
+        name="limit"
+        id=""
+        [(ngModel)]="limitSelected"
+        formControlName="limit"
+      />
+    </div>
+    <div class="col-md-2">
+      <input
+        class="form-control"
+        type="number"
+        name="daysName"
+        id=""
+        [(ngModel)]="days"
+        formControlName="daysName"
+        placeholder=" <= jour"
+      />
+    </div>
+    <div class="col-md-2"><button class="form-control">Valider</button></div>
+  </div>
+</form>
+<agm-map
+  [latitude]="lat"
+  [longitude]="lng"
+  [zoom]="zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="true"
+>
+  <agm-marker-cluster
+    imagePath="https://raw.githubusercontent.com/sir-kain/v3-utility-library/master/markerclustererplus/images/m"
+  >
+    <agm-marker
+      *ngFor="let m of markers; let i = index"
+      (markerClick)="clickedMarker(m.label, i)"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [label]="m.label"
+      [markerDraggable]="m.draggable"
+    >
+      <agm-info-window>
+        <strong> Titre: {{ m.ad_titre }} </strong> <br />
+        <strong> Vendeur: {{ m.username }} </strong> <br />
+      </agm-info-window>
+    </agm-marker>
+  </agm-marker-cluster>
+
+  <agm-circle
+    [latitude]="lat + 0.3"
+    [longitude]="lng"
+    [radius]="5000"
+    [fillColor]="'orange'"
+    [circleDraggable]="true"
+    [editable]="true"
+  >
+  </agm-circle>
+</agm-map>

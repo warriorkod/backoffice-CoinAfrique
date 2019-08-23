@@ -1,0 +1,132 @@
+
+<div class="container containter-margin-1">
+  <div class="row jusify-content-left">
+        <div class="col-md-4">
+          Nombre d'annonce en attende de moderation: {{ totalPending }}
+        </div>
+      </div>
+      <div class="row justify-content-between">
+        <div class="col-md-8">
+          <form
+            [formGroup]='filterModerationForm'
+          >
+            <div class='row'>
+              <div class='col-md-4'>
+                <input
+                  class="form-control"
+                  placeholder="Recherche par id annonce"
+                  formControlName="searchFilterModeration"
+                />
+              </div>
+    
+              <div class='col-md-2'>
+                <button
+                  class='btn btn-primary pointer'
+                  type="button"
+                  (click)="submitForm(filterModerationForm.value)"
+                >
+                  Recherche
+                </button>
+              </div>
+              <div class="col-md-2">
+                  <button class="btn btn-danger" (click)='resetFilter()' type="submit">&#10005;</button>
+                </div>
+            </div>
+          </form>
+        </div>
+      </div>
+       <div
+        class="row justify-content-center">
+    
+          <table
+            class="table table-hover ks-table-cells-vertical-align-middle selectable">
+            <thead>
+              <tr>
+                <th>ID de l'annonce</th>
+                <th>ID du batch</th>
+                <th>ID de la tâche</th>
+                <th>Status de création de tâche</th>
+                <th>Date de création de tâche</th>
+                <th>Date màj de la tâche</th>
+                <th>Status de la tâche</th>
+                <th>Type de tâche</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr scope="row" (click)='showAdPopup(task)' *ngFor="let task of pendingTasks">
+                <td>
+                  {{ task.ad_id }}
+                </td>
+                <td>
+                  {{ task.batch_id }}
+                </td>
+                <td>
+                  {{ task.isahit_task_id }}
+                </td>
+                <td>
+                  
+                  <div>
+                    <span class="badge badge-pill" [ngClass]="getTaskStatusClass(task.task_creation_status)">
+                      {{ task.task_creation_status }}
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  {{ task.task_creation | date:"medium" }}
+                </td>
+                <td>
+                  {{ task.task_status_update != "Inconnu" ? (task.task_status_update | date:"medium") : ("Aucune mise à jour") }}
+                </td>
+                <td>              
+                    <div>
+                        <span class="badge badge-pill" [ngClass]="getTaskStatusClass(task.task_status)">
+                          {{ task.task_status }}
+                        </span>
+                    </div>
+                </td>
+                <td>
+                  {{ task.type_task }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+          <div *ngIf="this.totalPending == 0" class="row">
+              <div class="col-md-12">
+                <h2 class="text-center">  Aucune annonce à modéré </h2>
+              </div>
+          </div>
+        
+        <!-- TODO: to separate component -->
+      
+        <div class="row has-text-centered pull-right navigation">
+          <label class="control">
+            <input name="pageNbInput" type="number" class="input"  placeholder="Aller à la page" [(ngModel)]="currentGotoPage" />
+            <button type="button" name="pageSubmit" class="btn btn-primary btn-sm" (click)="getSpecificPage(currentGotoPage)">Aller</button>
+        </label>
+          <p  style="display: inline">
+            <a
+              [ngClass]="isPreviousPageAvailable() ? 'pointer' : 'disabled'"
+              (click)="getPreviousPage()"
+              class="btn btn-bo btn-sm"
+            >
+              Précédent
+            </a>
+    
+            Page {{ currentPage }} sur {{ totalCount }}
+    
+            <a
+              [ngClass]="isNextPageAvailable() ? 'pointer' : 'disabled'"
+              (click)="getNextPage()"
+              class="btn btn-bo btn-sm click"
+            >
+              Suivant
+            </a>
+          </p>
+    
+        </div>
+</div>
+
+
+<ad-modal [adId]='selectedAdId' (resetSelectedAdId)="resetSelectedAdId($event)"></ad-modal>

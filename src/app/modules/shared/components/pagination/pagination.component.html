@@ -1,0 +1,36 @@
+<div class="row has-text-centered pull-right navigation">
+    <label class="control">
+        <input
+            name="pageNbInput"
+            type="number"
+            class="input"
+            [placeholder]="LABELS_FR.selectPage"
+            [(ngModel)]="currentPage" />
+
+        <button
+            type="button"
+            name="pageSubmit"
+            class="btn btn-primary btn-sm"
+
+            (click)="getSpecificPage(currentPage)">
+                {{ LABELS_FR.apply }}
+        </button>
+
+    </label>
+
+    <p style="display: inline">
+        <a [class.disabled]="!isPreviousPageAvailable()"
+            (click)="getPreviousPage()"
+            class="btn btn-bo btn-sm pointer">
+                {{ LABELS_FR.prev }}
+        </a>
+
+        Page {{ currentPage }} sur {{ totalPagesCount }}
+
+        <a [class.disabled]="!isNextPageAvailable()"
+           (click)="getNextPage()"
+           class="btn btn-bo btn-sm click pointer">
+                {{ LABELS_FR.next }}
+        </a>
+    </p>
+</div>

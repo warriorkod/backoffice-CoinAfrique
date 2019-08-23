@@ -1,0 +1,157 @@
+<div class="row">
+    <div class="col-md-10 offset-md-1 ks-panels-column-section">
+        <!-- Start card content -->
+        <div class="card">
+            <div class="card-block">
+                <h5 class="card-title text-bold">
+                    {{ formLabelsFr.banner }}
+                </h5>
+            </div>
+
+            <!-- Banner images -->
+            <div class="row justify-content-around">
+                <div class="col-md-3">
+                    <div class="card card-body d-table-cell align-middle no-border">
+                        <div>
+                            <img src="{{banner?.image_url_500}}" class="img-row" src-fallback="{{ formLabelsFr.image }}" alt="">
+                        </div>
+                        <div>{{ formLabelsFr.image }} ({{allowedImgSizes.small[0]}}x{{allowedImgSizes.small[1]}})</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card card-body d-table-cell align-middle no-border">
+                        <div>
+                            <img src="{{banner?.image_url_1000}}" class="img-row" src-fallback="{{ formLabelsFr.image }}" alt="">
+                        </div>
+                        <div>{{ formLabelsFr.image }} ({{allowedImgSizes.medium[0]}}x{{allowedImgSizes.medium[1]}})</div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="card card-body d-table-cell align-middle no-border">
+                        <div>
+                            <img src="{{banner?.image_url_1000}}" class="img-row" src-fallback="{{ formLabelsFr.image }}" alt="">
+                        </div>
+                        <div>{{ formLabelsFr.image }} ({{allowedImgSizes.full[0]}}x{{allowedImgSizes.full[1]}})</div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of banner images -->
+
+            <!-- Banner name -->
+            <div class="row margin-left-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.name }}
+                </div>
+
+                <div class="col-md-10">
+                    {{ banner?.name }}
+                </div>
+            </div>
+            <!-- End of banner name -->
+
+            <!-- Banner link -->
+            <div class="row margin-left-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.link }}
+                </div>
+
+                <div class="col-md-10">
+                    <a href="{{ banner?.dynamic_link }}" target="_blank">
+                        {{ banner?.dynamic_link }}
+                    </a>
+                </div>
+            </div>
+            <!-- End of banner link -->
+
+            <!-- Start of banner period -->
+            <div class="row margin-left-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.period }}
+                </div>
+
+                <div class="col-md-10">
+                    {{ banner?.start | amUtc | amDateFormat: dateFormat }} - {{ banner?.end | amUtc | amDateFormat: dateFormat }}
+                </div>
+            </div>
+            <!-- End of banner period -->
+
+            <!-- Start is banner enabled -->
+            <div class="row margin-left-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.enabled }}
+                </div>
+
+                <div class="col-md-10">
+                    {{ banner?.enabled | readableBooleanFr}}
+                </div>
+            </div>
+            <!-- End is banner enabled -->
+
+            <!-- Start banner country -->
+            <div class="row margin-left-1 margin-bottom-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.country }}
+                </div>
+
+                <div class="col-md-10">
+                    {{ banner?.country_code | redableCountryName: countries }}
+                </div>
+            </div>
+            <!-- End of banner country -->
+            <!-- Start of banner creation -->
+            <div class="row margin-left-1 margin-bottom-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.creation }}
+                </div>
+
+                <div class="col-md-10">
+                    {{ banner?.creation | amDateFormat: dateFormat }}
+                </div>
+            </div>
+            <!-- End of banner creation -->
+            <!-- Start of banner last_update -->
+            <div class="row margin-left-1 margin-bottom-1">
+                <div class="col-md-2 text-bold">
+                    {{ formLabelsFr.last_update }}
+                </div>
+
+                <div class="col-md-10">
+                    {{ banner?.last_update | amDateFormat: dateFormat }}
+                </div>
+            </div>
+            <!-- End of banner's last update -->
+        </div>
+        <!-- End of banner content -->
+
+        <!-- Start of control buttons -->
+        <div class="row justify-content-around margin-top-1">
+            <div class="col-md-2">
+                <button
+                    (click)="performDelete()"
+                    class="btn btn-danger">
+                        {{ formLabelsFr.delete }}
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <button
+                    (click)="performEdit()"
+                    class="btn btn-warning">
+                        {{ formLabelsFr.edit }}
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <button
+                    (click)="closeModal()"
+                    class="btn btn-warning">
+                        {{ formLabelsFr.cancel }}
+                </button>
+            </div>
+
+        </div>
+        <!-- Finish control buttons -->
+    </div>
+</div>

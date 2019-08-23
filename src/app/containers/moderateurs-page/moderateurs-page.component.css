@@ -1,0 +1,14 @@
+.custom-btn{
+  margin-right: 20px;
+  margin-top: 10px;
+}
+
+.custom-checkbox{
+  margin-right: 20px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.view-moderator-profile, .view-moderator-profile:visited, .la-eye:visited{
+  color: white;
+}

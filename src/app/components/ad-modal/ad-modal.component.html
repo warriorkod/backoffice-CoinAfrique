@@ -1,0 +1,40 @@
+<button id='ad-modal-show-button' class="btn btn-primary hidden" data-toggle="modal" data-target="#bd-ad-modal">
+  Show modal ad hidden button
+</button>
+
+<div class="modal fade bd-ad-modal" id="bd-ad-modal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel2"
+  style="display: none;" aria-hidden="true">
+  <div class="modal-dialog" style="min-width:400px; max-width: 600px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+            Annonce info courte
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="la la-close"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row" *ngIf='ad'>
+          <div class="col-md-2">
+            <img src="{{ad.photo1?.thumb}}" id="photo1" class="img-fluid" alt="Responsive image" alt="ad thumb" />
+          </div>
+
+          <div class="col-md-2">
+            <span>Id: {{ad.id}}</span>
+          </div>
+
+          <div class="col-md-2">
+            <span>Titre: {{ad.titre}}</span>
+          </div>
+
+          <div class="col-md-5">
+            <span>Description: {{ad.description}}</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="ks-crm-contacts-users-list-column-table-container">
+  <table class="table table-hover ks-table-cells-vertical-align-middle ">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Annonce ID</th>
+        <th>Opération</th>
+        <th>Vendeur</th>
+        <th>Modérateur</th>
+        <th>Avant</th>
+        <th>Après</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr role="row" *ngFor="let audit of audits$">
+        <td>
+          {{ audit?.date | amDateFormat: 'DD/MM/YYYY HH:mm' }}
+        </td>
+        <td>
+          {{ audit?.ad_id }}
+        </td>
+        <td>
+          {{ audit?.operator }}
+        </td>
+        <td>
+            <span *ngIf="!audit?.performedByModerator && usernames$[audit.id]">{{ usernames$[audit.id] }} [{{ audit?.user }}]</span>
+        </td>
+        <td>
+          <span *ngIf="audit?.performedByModerator && usernames$[audit.id]">{{ usernames$[audit.id] }} [{{ audit?.user }}]</span>
+        </td>
+        <td>
+          <span [innerHTML]="audit?.before"></span>
+        </td>
+        <td>
+          <span [innerHTML]="audit?.after"></span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <div class="has-text-centered pull-right navigation">
+    <label class="control">
+      <input type="text" class="input" placeholder="Aller à la page" [(ngModel)]="page" />
+      <button type="button" name="button" class="btn btn-primary btn-sm" (click)="goToPage()">Aller</button>
+    </label>
+    <p style="display: inline">
+      <a (click)="getPreviousPage()" *ngIf="prev" class="btn btn-bo btn-sm">Précédent</a>
+      Page {{current_page}} sur {{total}}
+      <a (click)="getPage()" *ngIf="next" class="btn btn-bo btn-sm click">Suivant</a>
+    </p>
+  </div> -->
+</div>

@@ -1,0 +1,61 @@
+<!-- Loading component -->
+<ngx-loading
+    [hidden]="!isLoading"
+    [show]="isLoading$ | async"
+    [config]="{ backdropBorderRadius: '14px', fullScreenBackdrop: true }">
+</ngx-loading>
+
+<!-- Header name -->
+<bo-header [title]="COMPONENT_NAME_FR"></bo-header>
+
+<!-- Main content -->
+<div class="ks-crm-contacts-container">
+    <div class="ks-crm-contacts-users-list-column ks-padding-1">
+        <bo-banner-filters
+            [countries]="countries"
+            (onFilterParams)="onFilterParams($event)"
+            (onShowNewForm)="onShowNewForm($event)">
+        </bo-banner-filters>
+
+        <bo-banner-table
+            [banners]="banners$ | async"
+            [countries]="countries"
+            (emitBanner)="onSelectedBannerChange($event)">
+        </bo-banner-table>
+    </div>
+</div>
+
+<!-- Pagination component -->
+<div class="row justify-content-end ks-padding-3">
+    <div class="col-md-5">
+        <bo-pagination
+            [totalCount]="bannersCount$ | async"
+            [pageSize]="PER_PAGE"
+            (paginationUrl)="onPaginationUrl($event)">
+        </bo-pagination>
+    </div>
+</div>
+
+<!-- Modal window -->
+<bo-modal [modalId]="MODAL_ID" [ngSwitch]="editMode">
+    <bo-banner-page
+        [countries]="countries"
+        [banner]="currentBanner$ | async"
+        (changeMode)="switchToEdit($event)"
+        (isCloseParentModal)="closeBannerModal($event)"
+        *ngSwitchCase="EDIT_MODES.disabled">
+    </bo-banner-page>
+
+    <bo-banner-form
+        [countries]="countries"
+        [banner]="currentBanner$ | async"
+        (isEditCanceled)="switchToShow($event)"
+        *ngSwitchCase="EDIT_MODES.edit">
+    </bo-banner-form>
+
+    <bo-banner-form
+        [countries]="countries"
+        (isEditCanceled)="closeBannerModal($event)"
+        *ngSwitchCase="EDIT_MODES.new">
+    </bo-banner-form>
+</bo-modal>

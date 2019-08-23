@@ -1,0 +1,90 @@
+<div class="ks-page-header">
+    <section class="ks-title">
+        <h3>{{title}}</h3>
+        <button class="btn btn-primary-outline ks-light ks-content-nav-toggle" data-block-toggle=".ks-content-nav .ks-nav">Menu</button>
+        <!-- <button class="btn btn-bo pull-right" type="button" *ngIf="test===1" data-toggle="modal" data-target="#CreateVendorModal" data-whatever="@mdo"> {{button}} </button> -->
+    </section>
+  </div>
+<!-- <div class="modal fade" id="CreateVendorModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Créer un nouveau compte</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form  [formGroup]='vendorForm' (ngSubmit)="onCreateNewVwndor(vendorForm.value)">
+      <div class="modal-body">
+
+<div *ngIf="diagnostic"  class="alert alert-danger">
+          <p> {{diagnostic}} </p>
+</div>
+<div class="form-group">
+  <input type="text" class="form-control" 
+         required placeholder="Nom complet*"
+         formControlName="name">
+  <label *ngIf="formErrors['name'] != ''" class="valid-error"> {{ formErrors['name'] }}</label>
+
+</div>
+
+<div class="form-group">
+  <input type="email"  class="form-control" id=""
+  formControlName="email" placeholder="Email*" required>
+  <label *ngIf="formErrors['email'] != ''" class="valid-error"> {{ formErrors['email'] }}</label>
+</div>
+<div class="form-group">
+  <input type="password"  class="form-control" id=""
+  formControlName="password1" placeholder="Mot de passe*" required>
+  <label *ngIf="formErrors['password1'] != ''" class="valid-error"> {{ formErrors['password1'] }}</label>
+  <label *ngIf="formErrors['toshort'] != ''" class="valid-error"> {{ formErrors['toshort'] }}</label>
+</div>
+<div class="form-group">
+  <input type="password"  class="form-control" id=""
+  formControlName="password2" placeholder="Confirmer mot de passe*" required>
+  <label *ngIf="formErrors['password2'] != ''" class="valid-error"> {{ formErrors['password2'] }}</label>
+</div>
+
+<div class="form-group">
+  <select
+          (change)="onChangePays(this.vendorForm.value)" 
+          class="form-control" tabindex="-1" aria-hidden="true" id=""
+          required
+          formControlName="country">
+    <option disabled value="">Choisir le pays*</option>
+    <option *ngFor="let p of pays$ | async" [value]="p.id">  {{p.nom}}</option>
+  </select>
+  <label *ngIf="formErrors['country'] != ''" class="valid-error"> {{ formErrors['country'] }}</label>
+</div>
+
+<div class="form-group">
+  <select class="form-control" tabindex="-1" aria-hidden="true"  id=""
+          required
+          formControlName="address" >
+     <option disabled value="">Choisir la localité</option>
+     <option *ngFor="let item of localityByCountry$ " [ngValue]="item.nom">{{item.nom}}</option>
+      <ng-template ngFor let-item [ngForOf]="localityByCountry$">
+                    <optgroup *ngIf="item.childs" label="{{item.nom}}">
+                      <option *ngFor="let child of item.childs" [ngValue]="child.nom">{{child.nom}}</option>
+                    </optgroup>
+                    <option *ngIf="!item.childs" [ngValue]="item.nom">{{item.nom}}</option>
+    </ng-template>
+  </select>
+</div>
+<div class="form-group">
+  <input type="text"  class="form-control" id="" [value]="phone_code"
+  formControlName="phone" placeholder="Numéro téléphone " >
+</div>
+<div class="form-group">
+  <input type="text"  class="form-control" id="" [value]="phone_code"
+  formControlName="whatsapp_phone" placeholder="Numéro whatsApp" >
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="reset" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit"  class="btn btn-primary">Créer le compte</button>
+      </div>
+         </form>
+    </div>
+  </div>
+</div> -->

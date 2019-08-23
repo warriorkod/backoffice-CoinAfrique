@@ -1,0 +1,124 @@
+<!-- Filtration goes here -->
+<div class="row justify-content-center">
+  <div class="col-md-12">
+    <form [formGroup]='filterBatchStatsForm'>
+      <div class="row">
+
+        <div class="col-md-3" id="dateinput-batch">
+          <input
+            class="form-control datepickercustom"
+            type="text"
+            daterangepicker
+            [options]="pickerOptions"
+            [placeholder]='pickerLabel'
+            (selected)="selectedDate($event)"
+            (cancelDaterangepicker)="clearDaterangeValues($event)"
+          />
+        </div>
+
+        <div class="col-md-3">
+          <input
+            class="form-control"
+            placeholder="Batch id"
+            formControlName="batchIdFilter"
+          />
+        </div>
+
+        <div class="col-md-1">
+          <button
+            class='btn btn-primary pointer'
+            type='button'
+            (click)='submitForm()'
+          >
+            Filtre
+          </button>
+        </div>
+        
+      <div class="col-md-1">
+        <button
+          class="btn btn-danger pointer"
+          type="button"
+          (click)='resetFilter()'
+        >
+        &#10005;
+        </button>
+      </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- content starts here -->
+<div class="row justify-content-start"
+  [ngSwitch]="batches.length == 0">
+
+  <div *ngSwitchCase="true" class="col-md-12">
+      Aucun lot présent
+  </div>
+
+  <table
+    *ngSwitchDefault
+    class="table table-hover ks-table-cells-vertical-align-middle"
+  >
+    <thead>
+      <tr>
+        <th>Batch id</th>
+        <th>Creation date</th>
+
+        <th>Ad id lower</th>
+        <th>Ad id upper</th>
+
+        <th>Tâches créées</th>
+        <th>Annonces modérées</th>
+        <th>Annonces validées</th>
+        <th>Annonces rejetées</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr scope="row" *ngFor="let batch of batches">
+        <td>{{ batch.batch_id }}</td>
+        <td>{{ batch.creation | date:"medium" }}</td>
+
+        <td>{{ batch.ad_id_lower_range}}</td>
+        <td>{{ batch.ad_id_upper_range}}</td>
+
+        <td>{{ batch.nbr_tasks_created }}</td>
+        <td>{{ batch.nbr_ads_moderated }}</td>
+        <td>{{ batch.nbr_ads_validated }}</td>
+        <td>{{ batch.nbr_ads_rejected }}</td>
+      </tr>
+    </tbody>
+
+
+  </table>
+</div>
+
+
+<!-- pagination information -->
+  <div class="row has-text-centered pull-right navigation">
+      <label class="control">
+          <input name="pageNbInput" type="number" class="input"  placeholder="Aller à la page" [(ngModel)]="currentGotoPage" />
+          <button type="button" name="pageSubmit" class="btn btn-primary btn-sm" (click)="getSpecificPage(currentGotoPage)">Aller</button>
+      </label>
+      <p  style="display: inline">
+        <a
+          [ngClass]="isPreviousPageAvailable() ? 'pointer' : 'disabled'"
+          (click)="getPreviousPage()"
+          class="btn btn-bo btn-sm"
+        >
+          Précédent
+        </a>
+
+        Page {{ currentPage }} sur {{ totalPagesCount }}
+
+        <a
+          [ngClass]="isNextPageAvailable() ? 'pointer' : 'disabled'"
+          (click)="getNextPage()"
+          class="btn btn-bo btn-sm click"
+        >
+          Suivant
+        </a>
+      </p>
+  </div>

@@ -1,0 +1,231 @@
+<div class="ks-sidebar ks-column ks-info" [id]="getSidebarId()">
+  <div class="ks-wrapper ks-sidebar-wrapper ks-scrollable ks-wrapper-no-paddings"
+       [class.ks-sidebar-half-opened]="isHalfSidebar()">
+    <!-- Start side menu content -->
+    <ul class="nav nav-pills nav-stacked">
+        <!-- Start of menu section 0 -->
+        <li class="nav-item nav-section-header"
+          id="section-0"
+          [class.margin-center]="isHalfSidebar()"
+          (click)="switchSectionState(0)">
+        <a>
+          <span [hidden]="isHalfSidebar()">Général</span>
+          <span class="ks-icon la align-right"
+                [class.la-minus]="!sectionCollapseStates[0]"
+                [class.la-plus]="sectionCollapseStates[0]"></span>
+        </a>
+      </li>
+
+      <li class="nav-item"
+          *ngIf="!isFreelancer()"
+          [hidden]="sectionCollapseStates[0]">
+        <a class="nav-link"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact : true }"
+           [routerLink]="['/app']">
+              <span class="ks-icon la la-dashboard"></span>
+              <span>Tableau de bord</span>
+        </a>
+      </li>
+
+      <!-- Start of menu section 1 -->
+      <li class="nav-item nav-section-header"
+          id="section-0"
+          [class.margin-center]="isHalfSidebar()"
+          (click)="switchSectionState(1)">
+        <a>
+          <span [hidden]="isHalfSidebar()">Modération</span>
+          <span class="ks-icon la align-right"
+                [class.la-minus]="!sectionCollapseStates[1]"
+                [class.la-plus]="sectionCollapseStates[1]"></span>
+        </a>
+      </li>
+
+      <li class="nav-item"
+          *ngIf="!isFreelancer()"
+          [hidden]="sectionCollapseStates[1]">
+
+            <a class="nav-link"
+               routerLinkActive="active"
+               [routerLinkActiveOptions]="{exact : true }"
+               [routerLink]="['/annonces']">
+                  <span class="ks-icon la la-cubes"></span>
+                  <span>Annonces</span>
+            </a>
+      </li>
+
+      <li class="nav-item"
+          *ngIf="!isFreelancer()"
+          [hidden]="sectionCollapseStates[1]">
+
+        <a class="nav-link"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact : true }"
+           [routerLink]="['/vendeurs']">
+              <span class="ks-icon la la-toggle-off"></span>
+              <span>Vendeurs</span>
+        </a>
+        </li>
+        <li class="nav-item"
+          *ngIf="!isFreelancer()"
+          [hidden]="sectionCollapseStates[1]">
+
+        <a class="nav-link"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact : true }"
+           [routerLink]="['/vendeursrfu']">
+              <span class="ks-icon la la-toggle-off"></span>
+              <span>Vendeurs RFU</span>
+        </a>
+      </li>
+
+      <li class="nav-item"
+          *ngIf="!isModerator()"
+          [hidden]="sectionCollapseStates[1]">
+
+        <a class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact : true }"
+            [routerLink]="['/isahit']">
+              <img src="../../../assets/img/isahit-logo.png"
+                   class="img-gray ks-icon">
+              <span>Isahit</span>
+        </a>
+      </li>
+      <!-- End of the section menu 1 -->
+
+      <!-- Start of the section menu 2 -->
+      <li class="nav-item nav-section-header"
+          id="section-1"
+          [class.margin-center]="isHalfSidebar()"
+          (click)="switchSectionState(2)">
+        <a>
+          <span [hidden]="isHalfSidebar()">Marketing</span>
+          <span class="ks-icon la align-right"
+                [class.la-minus]="!sectionCollapseStates[2]"
+                [class.la-plus]="sectionCollapseStates[2]"></span>
+        </a>
+      </li>
+
+        <li class="nav-item"
+            *ngIf="!isModerator()"
+            [hidden]="sectionCollapseStates[2]">
+          <a class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact : true }"
+            [routerLink]="['/adlocation']">
+            <span class="ks-icon la la-map-pin"></span>
+            <span>Emplacement des annonces</span>
+          </a>
+        </li>
+
+      <li class="nav-item"
+          *ngIf="!isFreelancer()"
+          [hidden]="sectionCollapseStates[2]">
+
+        <a class="nav-link"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact : true }"
+           [routerLink]="['/collections']">
+            <span class="ks-icon la la-flask"></span>
+            <span>Collections</span>
+        </a>
+      </li>
+
+      <li class="nav-item"
+          *ngIf="!isFreelancer()"
+          [hidden]="sectionCollapseStates[2]">
+
+        <a class="nav-link"
+           routerLinkActive="active"
+           [routerLinkActiveOptions]="{exact : true }"
+           [routerLink]="['/premium']">
+          <span class="ks-icon la la-desktop"></span>
+          <span>Premium</span>
+        </a>
+      </li>
+      <!-- End of the section menu 2 -->
+
+      <!-- Start of the menu section 3 -->
+      <li class="nav-item nav-section-header"
+          id="section-2"
+          [class.margin-center]="isHalfSidebar()"
+          (click)="switchSectionState(3)">
+            <a>
+              <span [hidden]="isHalfSidebar()">Admin</span>
+              <span class="ks-icon la align-right"
+                    [class.la-minus]="!sectionCollapseStates[3]"
+                    [class.la-plus]="sectionCollapseStates[3]"></span>
+            </a>
+      </li>
+
+      <li class="nav-item "
+          *ngIf="isAdmin()"
+          [hidden]="sectionCollapseStates[3]">
+
+          <a class="nav-link" routerLinkActive="active"
+              [routerLinkActiveOptions]="{exact : true }"
+              [routerLink]="['/moderateurs']">
+                <span class="ks-icon la la-user-secret"></span>
+                <span>BO-Accounts</span>
+          </a>
+      </li>
+      <!-- End of the menu section 3 -->
+
+      <!-- Start of the menu section 4 -->
+      <li class="nav-item nav-section-header"
+          id="section-3"
+          [class.margin-center]="isHalfSidebar()"
+          (click)="switchSectionState(4)">
+        <a>
+          <span [hidden]="isHalfSidebar()">Freelancers</span>
+          <span class="ks-icon la align-right"
+                [class.la-minus]="!sectionCollapseStates[4]"
+                [class.la-plus]="sectionCollapseStates[4]"></span>
+        </a>
+      </li>
+
+      <li class="nav-item"
+          *ngIf="!isModerator()"
+          [hidden]="sectionCollapseStates[4]">
+
+          <a class="nav-link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact : true }"
+            [routerLink]="['/freelancers']">
+              <span class="ks-icon la la-users"></span>
+              <span>Freelancers</span>
+          </a>
+      </li>
+      <!-- End of the menu section 4 -->
+
+      <!-- Start of the menu section 5 -->
+      <li class="nav-item nav-section-header"
+      id="section-3"
+      [class.margin-center]="isHalfSidebar()"
+      (click)="switchSectionState(5)">
+        <a>
+          <span [hidden]="isHalfSidebar()">Paramètres</span>
+          <span class="ks-icon la align-right"
+                [class.la-minus]="!sectionCollapseStates[5]"
+                [class.la-plus]="sectionCollapseStates[5]"></span>
+        </a>
+      </li>
+
+      <li class="nav-item"
+      *ngIf="!isModerator()"
+      [hidden]="sectionCollapseStates[5]">
+
+        <a class="nav-link"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact : true }"
+          [routerLink]="['/banners']">
+            <span class="ks-icon la la-photo"></span>
+            <span>Bannières</span>
+        </a>
+      </li>
+      <!-- End of the menu section 5 -->
+    </ul>
+    <!-- End of the side menu content -->
+  </div>
+</div>
